@@ -162,9 +162,14 @@ class TrumpSystem:
         i_suit  = self.effective_suit(incumbent)
 
         if c_suit == i_suit:
-            return self.trump_order(challenger) > self.trump_order(incumbent) \
-                   if (c_trump and i_trump) \
-                   else RANK_VAL[challenger.rank] > RANK_VAL[incumbent.rank]
+            if c_trump and i_trump:
+                c_order = self.trump_order(challenger)
+                i_order = self.trump_order(incumbent)
+                if 500 <= c_order <= 502 and 500 <= i_order <= 502:
+                    return False
+                else: return c_order > i_order
+            else:
+                return RANK_VAL[challenger.rank] > RANK_VAL[incumbent.rank]
 
         # challenger is trump, incumbent is not → beats
         if c_trump and not i_trump:
@@ -218,9 +223,10 @@ class CardCombo:
         if len(suits) == 1:
             # Group by rank within effective suit
             if n == 2:
-                if cards[0].rank == cards[1].rank or \
-                   (trump.is_trump(cards[0]) and trump.is_trump(cards[1]) and
+                if (trump.is_trump(cards[0]) and trump.is_trump(cards[1]) and
                     trump.trump_order(cards[0]) == trump.trump_order(cards[1])):
+                    return ComboType.PAIR, [cards]
+                elif cards[0].rank == cards[1].rank and (not trump.is_trump(cards[0]) and not trump.is_trump(cards[1])):
                     return ComboType.PAIR, [cards]
                 # Two different singles is invalid as pair; treat as multi
             # Check tractor: consecutive pairs

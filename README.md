@@ -7,12 +7,14 @@ TODO Updates:
 
 Correctness/Game Logic:
 1. Current Logic for Switch Attacking/Defending Roles bugged - trump rank is also not correctly updating relative to the defender's level.
-2. For convenience of sorting, the trump rank non-trump suit cards have an ordering in the trick winning logic. They should be equal level, so the first player who plays it should win
-3. In the same vein, two differing suits for the trump rank is being considered a pair - this should not occur.
-4. Currently does not support switching out with the kitty (8 bottom cards)
-5. Currently does not support PvP, only player-vs-bots.
-6. Allows for single-joker bidding to reinforce bids (this should be removed, the only bids should be single, double, and double joker)
+2. Currently does not support switching out with the kitty (8 bottom cards)
+3. Currently does not support PvP, only player-vs-bots.
+4. Allows for single-joker bidding to reinforce bids (this should be removed, the only bids should be single, double, and double joker)
+5. Currently does not allow detecting illegal throws (e.g. throwing an AA-Q when there's still a K somewhere - this can easily be abused since it allows players to throw entire suits down with little to no risk)
 
 QoL:
 1. Slower dealing to allow players to make more informed decisions on when to bid for trump suit
 2. A delay after each trick to allow players to see all of the cards played in a trick
+
+Updates (2/23):
+1. Fixed non-suit trump rank cards: ordering no longer affects provisional winning, and different suits within the trump suit are no longer considered pairs
